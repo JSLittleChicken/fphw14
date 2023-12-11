@@ -55,36 +55,14 @@ let users = [
     }
 ]
 
-function usersCheck(users) {
-    let usersMin2000 = [];
+const initialValue = 0;
+const sumAllBalance = (users.reduce(
+    (accumulator, currentValue) => accumulator + Number(currentValue.balance.replaceAll(',','').replace('$','')),
+    initialValue
+)).toFixed(2)
 
-    for (let user of users) {
-        let check = +user["balance"].replace(',', '').replace('$', '');
-        if (check > 2000) {
-            usersMin2000.push(user);
-        }
-    }
-    return usersMin2000;
-}
+const overTwoThousandPhones = users.filter((user) => user.balance.replaceAll(',','').replace('$','') > 2000 ).map((user) => user.phone)
 
+console.log('Телефони юзерів з балансом більше двох тисяч', overTwoThousandPhones)
+console.log('Сума балансів всіх юзерів', sumAllBalance)
 
-function usersBalanceSumm(users) {
-    let sum = 0;
-
-    for (let user of users) {
-        let check = +user["balance"].replace(',', '').replace('$', '');
-        sum += check;
-    }
-    return sum.toFixed(2)
-}
-
-
-let usersResult = usersCheck(users);
-
-console.log('Користувачі чий баланс перевищує $2000');
-let twoThPhones = [];
-for (user of usersResult) {
-    twoThPhones.push(user['phone'])
-}
-console.log(twoThPhones)
-console.log(`Загальна сума ${usersBalanceSumm(users)}`);
